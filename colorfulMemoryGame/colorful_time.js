@@ -47,6 +47,10 @@ const timerElement = document.getElementById('timer');
                 card2.classList.add('matched');
                 score += 2;
                 scoreElement.textContent = `Score: ${score}`;
+        // Restart timer when a match is found
+        clearInterval(gameInterval);
+        timeLeft = 30; // Reset timer to 30 seconds
+        startGameTimer(timeLeft);
             } else {
                 card1.textContent = '?';
                 card2.textContent = '?';
@@ -57,8 +61,8 @@ const timerElement = document.getElementById('timer');
         }
     
     function startGame() {
-            let timeLeft = 30;
-            startbtn.disabled = true;
+    timeLeft = 30;
+    startbtn.disabled = true;
             score = 0; // Reset score to zero
             scoreElement.textContent = `Score: ${score}`;
             startGameTimer(timeLeft);
@@ -69,19 +73,19 @@ const timerElement = document.getElementById('timer');
             gameContainer.addEventListener('click', handleCardClick);
         }
     
-    function startGameTimer(timeLeft) {
-            timerElement.textContent = `Time Left: ${timeLeft}`;
+function startGameTimer(time) {
+    timerElement.textContent = `Time Left: ${time}`;
+    timeLeft = time; // Ensure global timeLeft is updated
             gameInterval = setInterval(() => {
                 timeLeft--;
                 timerElement.textContent = `Time Left: ${timeLeft}`;
 
                 if (timeLeft === 0) {
-                    clearInterval(gameInterval);
-                    let timeLeft = 30;
-                    alert('Game Over!');
+            clearInterval(gameInterval);
+            alert('Game Over!');
                     startbtn.disabled = false;
                 }
             }, 1000);
         }
     
-    
+       startbtn.addEventListener('click', startGame);
